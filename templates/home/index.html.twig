@@ -1,21 +1,51 @@
 {% extends 'base.html.twig' %}
 {% import 'macros.html.twig' as macros %}
 
-{% block title %}Benvenuto in symfony 7{% endblock %}
-
-{% block page_header %}
-{#     <h1 class="text-center my-5">Benvenuto in Twitter_X</h1>
- #}{% endblock %}
-{% block body_class 'homepage-background' %}
+{% block title %}Home / X{% endblock %}
 
 {% block body %}
-    <nav aria-label="breadcrumb" class="my-4">
-        <ol class="breadcrumb"> {# RIMUOVI QUI LA CLASSE text-primary #}
-            {{ macros.breadcrumbs(breadcrumbs) }}
-        </ol>
-    </nav>
-    
-    <div class="container">
-        <p class="text-center mt-4">Benvenuto nella tua homepage!</p>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        
+        <div class="hidden md:block col-span-1">
+            <div class="sticky top-4">
+                {{ include('micro_post/_sidebar_left.html.twig', ignore_missing = true) }}
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 border-x border-gray-200 min-h-screen">
+            <div class="sticky top-0 bg-white/80 backdrop-blur-md z-10 p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold">Per te</h1>
+            </div>
+
+            {# Breadcrumbs stilizzati #}
+            <nav aria-label="breadcrumb" class="px-4 py-2 text-sm border-b border-gray-100 bg-gray-50">
+                <ol class="flex list-none p-0">
+                    {{ macros.breadcrumbs(breadcrumbs) }}
+                </ol>
+            </nav>
+
+            {# Ciclo sui post caricati dalle Fixtures #}
+            <div class="divide-y divide-gray-200">
+                {% for post in posts %}
+                    {{ include('micro_post/_post_card.html.twig', {post: post}) }}
+                {% else %}
+                    <div class="p-10 text-center">
+                        <p class="text-gray-500 italic">Non ci sono ancora post. Inizia a scrivere qualcosa!</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="hidden md:block col-span-1">
+            <div class="sticky top-4 space-y-4">
+                <div class="bg-gray-50 rounded-2xl p-4">
+                    <h2 class="font-bold text-lg mb-4">Cosa succede</h2>
+                    {# Qui potresti mettere i trend #}
+                    <div class="text-sm text-blue-500">#Symfony7 #PHP #Coding</div>
+                </div>
+                {{ include('micro_post/_who_to_follow.html.twig', ignore_missing = true) }}
+            </div>
+        </div>
+
     </div>
 {% endblock %}

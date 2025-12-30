@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Qui puoi aggiungere i tuoi stili custom stile Twitter */
+body {
+    @apply bg-black text-white;
+}

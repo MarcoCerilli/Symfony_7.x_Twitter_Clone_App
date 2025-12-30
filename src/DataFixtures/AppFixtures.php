@@ -93,7 +93,7 @@ class AppFixtures extends Fixture
             $randomPost = $posts[array_rand($posts)];
             $randomUser = $users[array_rand($users)];
 
-            $likeKey = $randomUser->getId() . '-' . $randomPost->getId();
+            $likeKey = $randomUser->getEmail() . '-' . spl_object_hash($randomPost);
             
             // Se l'utente non ha già messo like a questo post, lo creo
             if (!in_array($likeKey, $likesTracker)) {
