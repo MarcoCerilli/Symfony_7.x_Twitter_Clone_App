@@ -1,0 +1,38 @@
+<div class="flex flex-col h-full justify-between pb-4">
+    <div class="space-y-4">
+        <div class="p-3 w-fit rounded-full hover:bg-zinc-900 transition">
+            <i class="fab fa-twitter text-3xl"></i>
+        </div>
+
+        <nav class="space-y-2">
+            <a href="#" class="flex items-center space-x-4 p-3 hover:bg-zinc-900 rounded-full text-xl transition">
+                <i class="fas fa-home text-blue-400"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="flex items-center space-x-4 p-3 hover:bg-zinc-900 rounded-full text-xl transition">
+                <i class="fas fa-hashtag text-purple-400"></i>
+                <span>Esplora</span>
+            </a>
+            <a href="#" class="flex items-center space-x-4 p-3 hover:bg-zinc-900 rounded-full text-xl transition">
+                <i class="far fa-bell text-yellow-400"></i>
+                <span>Notifiche</span>
+            </a>
+            <a href="#" class="flex items-center space-x-4 p-3 hover:bg-zinc-900 rounded-full text-xl transition">
+                <i class="far fa-user text-pink-400"></i>
+                <span>Profilo</span>
+            </a>
+        </nav>
+
+        <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-full text-lg shadow-lg shadow-blue-500/20 transition mt-4">
+            Posta
+        </button>
+    </div>
+
+    <div class="flex items-center space-x-3 p-3 hover:bg-zinc-900 rounded-full cursor-pointer transition">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500"></div>
+        <div class="hidden xl:block">
+            <div class="font-bold text-sm">{{ app.user.userProfile.username|default('User') }}</div>
+            <div class="text-gray-500 text-xs">@{{ app.user.userProfile.username|default('anon')|lower }}</div>
+        </div>
+    </div>
+</div>

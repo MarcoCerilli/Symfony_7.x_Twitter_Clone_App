@@ -1,70 +1,66 @@
-{# templates/micro_post/_post.html.twig (versione corretta) #}
+{# templates/micro_post/_post.html.twig (Versione Tailwind) #}
+<div class="p-4 hover:bg-zinc-900/50 transition border-b border-gray-800">
+    <div class="flex space-x-3">
+        
+        {# ======= AVATAR ======= #}
+        <div class="flex-shrink-0">
+            {% if post.author.userProfile and post.author.userProfile.image %}
+                <img src="{{ asset('uploads/avatars/' ~ post.author.userProfile.image) }}" 
+                     class="w-12 h-12 rounded-full object-cover" 
+                     alt="Avatar di {{ post.author.userProfile.username|default(post.author.email) }}">
+            {% else %}
+                <img src="https://ui-avatars.com/api/?name={{ post.author.userProfile.username|default(post.author.email)|url_encode }}&background=random&color=fff" 
+                     class="w-12 h-12 rounded-full" 
+                     alt="Avatar">
+            {% endif %}
+        </div>
 
-<div class="card bg-dark text-white my-4 shadow-sm h-100">
-	<div
-		class="card-body d-flex flex-column">
+        {# ======= CONTENUTO DEL POST ======= #}
+        <div class="flex-grow">
+            <div class="flex items-center space-x-1">
+                <a href="{{ path('app_profile', {'user': post.author.id}) }}" class="font-bold text-white hover:underline">
+                    {{ post.author.userProfile.username|default(post.author.email) }}
+                </a>
+                <span class="text-gray-500 text-sm">· {{ post.created|date('d M') }}</span>
+            </div>
 
-		{# ======= SEZIONE AUTORE E DATA ======= #}
-		<div
-			class="d-flex align-items-center mb-3">
-			{# ✅ CORREZIONE: Ora la logica if/else è strutturata correttamente #}
-			{% if post.author.userProfile and post.author.userProfile.image %}
-				{# Se l'utente HA un'immagine, mostra quella caricata #}
-				<img src="{{ asset('uploads/avatars/' ~ post.author.userProfile.image) }}" class="rounded-circle" alt="Avatar di {{ post.author.userProfile.username|default(post.author.email) }}" width="50" height="50">
-			{% else %}
-				{# ALTRIMENTI, mostra il placeholder #}
-				<img src="https://ui-avatars.com/api/?name={{ post.author.userProfile.username|default(post.author.email)|url_encode }}&background=random&color=fff" class="rounded-circle" alt="Avatar di {{ post.author.userProfile.username|default(post.author.email) }}" width="50" height="50">
-			{% endif %}
+            <h5 class="text-white font-semibold mt-1">
+                <a href="{{ path('app_micro_post_show', {'post': post.id}) }}" class="hover:text-blue-400">
+                    {{ post.title }}
+                </a>
+            </h5>
 
-			<div class="ms-3">
-				<a href="{{ path('app_profile', {'user': post.author.id}) }}" class="text-white fw-bold text-decoration-none">
-					{{ post.author.userProfile.username|default(post.author.email) }}
-				</a>
-				<small class="text-secondary d-block">Data:
-					{{ post.created|date('d/m/Y') }}</small>
-			</div>
-		</div>
+            <p class="text-gray-300 mt-1 text-[15px] leading-normal">
+                {{ post.text|slice(0, 150) }}{{ post.text|length > 150 ? '...' : '' }}
+            </p>
 
-		{# ======= TITOLO E TESTO DEL POST ======= #}
-		<h5 class="card-title mb-3">
-			<a href="{{ path('app_micro_post_show', {'post': post.id}) }}" class="text-white text-decoration-none">
-				{{ post.title }}
-			</a>
-		</h5>
+            {# ======= FOOTER AZIONI (LIKE/COMMENTI) ======= #}
+            <div class="flex justify-between mt-3 text-gray-500 max-w-md">
+                
+                {# COMMENTI #}
+                <a href="{{ path('app_micro_post_show', {'post': post.id}) }}" class="flex items-center space-x-2 hover:text-blue-500 group">
+                    <div class="group-hover:bg-blue-500/10 p-2 rounded-full transition">
+                        <i class="far fa-comment"></i>
+                    </div>
+                    <span class="text-sm">{{ post.comments|length }}</span>
+                </a>
 
-		<p class="card-text text-secondary mb-4">{{ post.text|slice(0, 150) }}{{ post.text|length > 150 ? '...' : '' }}</p>
+                {# LIKE #}
+                <a href="{{ path('app_micro_post_like', {'post': post.id}) }}" class="flex items-center space-x-2 hover:text-red-500 group">
+                    <div class="group-hover:bg-red-500/10 p-2 rounded-full transition">
+                        <i class="far fa-heart"></i>
+                    </div>
+                    <span class="text-sm">{{ post.likedBy|length }}</span>
+                </a>
 
-		{# ======= SEZIONE FOOTER CON LIKE, COMMENTI E AZIONI ======= #}
-		<div class="mt-auto border-top border-secondary pt-3 post-footer">
-			<div
-				class="d-flex align-items-center">
-				{# LIKE #}
-				<a href="{{ path('app_micro_post_like', {'post': post.id}) }}" class="d-flex align-items-center me-3 text-decoration-none text-secondary">
-					<i class="far fa-thumbs-up me-2"></i>
-					<small>
-						{% set likeCount = post.likedBy|length %}
-						{{ likeCount > 0 ? likeCount : 'Nessun mi piace' }}
-					</small>
-				</a>
-
-				{# COMMENTI #}
-				<a href="{{ path('app_micro_post_show', {'post': post.id}) }}" class="d-flex align-items-center text-decoration-none text-secondary">
-					<i class="far fa-comment me-2"></i>
-					<small>
-						{% set commentCount = post.comments|length %}
-						{{ commentCount }}
-						{{ commentCount == 1 ? 'Commento' : 'Commenti' }}
-					</small>
-				</a>
-			</div>
-
-			<div>
-				{% if is_granted('IS_AUTHENTICATED_FULLY') and app.user == post.author %}
-					<a href="{{ path('app_micro_post_edit', {'post': post.id}) }}" class="btn btn-sm btn-primary">
-						Modifica
-					</a>
-				{% endif %}
-			</div>
-		</div>
-	</div>
+                {# MODIFICA (Solo se autore) #}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') and app.user == post.author %}
+                    <a href="{{ path('app_micro_post_edit', {'post': post.id}) }}" class="flex items-center space-x-2 hover:text-green-500">
+                        <i class="far fa-edit"></i>
+                        <span class="text-xs uppercase font-bold text-blue-500">Modifica</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>

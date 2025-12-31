@@ -8,5 +8,5 @@ require_once dirname(__DIR__) . '/vendor/autoload_runtime.php'; // QUESTA RIGA D
 // Esempio: Symfony\Component\HttpFoundation\Request::setTrustedProxies(...)
 
 return function (array $context) {
-    return new Kernel('prod', false);
+    return new Kernel('dev', true);
 };

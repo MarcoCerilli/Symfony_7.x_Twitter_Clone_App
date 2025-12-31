@@ -1,6 +1,7 @@
 {
     "name": "my_project",
     "version": "1.0.0",
+    "type": "module",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -15,6 +16,7 @@
         "@hotwired/turbo": "^7.1.0 || ^8.0",
         "@symfony/stimulus-bridge": "^3.2.0 || ^4.0.0",
         "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
+        "@tailwindcss/postcss": "^4.1.18",
         "autoprefixer": "^10.4.23",
         "postcss": "^8.5.6",
         "tailwindcss": "^4.1.18",

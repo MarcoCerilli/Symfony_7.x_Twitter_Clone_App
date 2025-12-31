@@ -1,51 +1,28 @@
 {% extends 'base.html.twig' %}
-{% import 'macros.html.twig' as macros %}
-
-{% block title %}Home / X{% endblock %}
 
 {% block body %}
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="flex justify-center min-h-screen bg-black text-white">
+    <div class="flex w-full max-w-[1300px]">
         
-        <div class="hidden md:block col-span-1">
-            <div class="sticky top-4">
-                {{ include('micro_post/_sidebar_left.html.twig', ignore_missing = true) }}
-            </div>
-        </div>
+        <aside class="w-1/4 sticky top-0 h-screen border-r border-gray-800 p-4">
+            {{ include('micro_post/_sidebar_left.html.twig') }}
+        </aside>
 
-        <div class="col-span-1 md:col-span-2 border-x border-gray-200 min-h-screen">
-            <div class="sticky top-0 bg-white/80 backdrop-blur-md z-10 p-4 border-b border-gray-200">
+        <main class="w-2/4 border-r border-gray-800">
+            <div class="sticky top-0 z-20 bg-black/60 backdrop-blur-md border-b border-gray-800 p-4">
                 <h1 class="text-xl font-bold">Per te</h1>
             </div>
-
-            {# Breadcrumbs stilizzati #}
-            <nav aria-label="breadcrumb" class="px-4 py-2 text-sm border-b border-gray-100 bg-gray-50">
-                <ol class="flex list-none p-0">
-                    {{ macros.breadcrumbs(breadcrumbs) }}
-                </ol>
-            </nav>
-
-            {# Ciclo sui post caricati dalle Fixtures #}
-            <div class="divide-y divide-gray-200">
+            
+            <div class="divide-y divide-gray-800">
                 {% for post in posts %}
-                    {{ include('micro_post/_post_card.html.twig', {post: post}) }}
-                {% else %}
-                    <div class="p-10 text-center">
-                        <p class="text-gray-500 italic">Non ci sono ancora post. Inizia a scrivere qualcosa!</p>
-                    </div>
+                    {{ include('micro_post/_post.html.twig', {post: post}) }}
                 {% endfor %}
             </div>
-        </div>
+        </main>
 
-        <div class="hidden md:block col-span-1">
-            <div class="sticky top-4 space-y-4">
-                <div class="bg-gray-50 rounded-2xl p-4">
-                    <h2 class="font-bold text-lg mb-4">Cosa succede</h2>
-                    {# Qui potresti mettere i trend #}
-                    <div class="text-sm text-blue-500">#Symfony7 #PHP #Coding</div>
-                </div>
-                {{ include('micro_post/_who_to_follow.html.twig', ignore_missing = true) }}
-            </div>
-        </div>
-
+        <aside class="w-1/4 sticky top-0 h-screen p-4 hidden lg:block">
+            {{ include('micro_post/_sidebar_right.html.twig', ignore_missing: true) }}
+        </aside>
     </div>
+</div>
 {% endblock %}

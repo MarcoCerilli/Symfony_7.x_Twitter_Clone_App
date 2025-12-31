@@ -1,8 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* Qui puoi aggiungere i tuoi stili custom stile Twitter */
-body {
+@layer base {
+  body {
+    /* Nero assoluto di sfondo per far risaltare il vetro */
     @apply bg-black text-white;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Classe personalizzata per il Glassmorphism se vuoi riutilizzarla */
+.glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
 }
